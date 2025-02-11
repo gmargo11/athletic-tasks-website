@@ -2,167 +2,467 @@
 <html lang="en">
 
 <head>
-    <!-- Title -->
-    <title>Bridging the Sim-to-Real Gap for Athletic Loco-Manipulation</title>
+  <!-- Title -->
+  <title>Bridging the Sim-to-Real Gap for Athletic Loco-Manipulation</title>
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Bridging the Sim-to-Real Gap for Athletic Loco-Manipulation">
-    <meta name="keywords" content="Sim-to-Real, Reinforcement Learning, Whole-Body Control, Athletic Robotics">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Bridging the Sim-to-Real Gap for Athletic Loco-Manipulation">
+  <meta name="keywords" content="Sim-to-Real, Reinforcement Learning, Whole-Body Control, Athletic Robotics">
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- FontAwesome and Academicons -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" 
-          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css">
+  <!-- Google Font for modern typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <style>
-        .header-container {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 20px;
-            padding-top: 0px;
-        }
-        .header-text {
-            text-align: center;
-        }
-    </style>
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- FontAwesome and Academicons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css">
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8QCJPHM9S"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <style>
+    /* Global Styles */
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Roboto', Helvetica, Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+      margin-top: 70px; /* Ensure content isn’t hidden behind fixed navbar */
+    }
+    /* Centered container */
+    .centered-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    
+    /* Navbar (Improved accessibility and removed extra div) */
+    .navbar {
+      padding: 0.5rem 1rem;
+    }
+    
+    /* Hero Section */
+    .main-section {
+      padding: 100px 0 60px;
+      background: linear-gradient(135deg, #0066cc 0%, #004a99 100%);
+      color: #fff;
+      text-align: center;
+    }
+    .main-section h2 {
+      font-weight: 700;
+      margin-bottom: 20px;
+      font-size: 2.5rem;
+    }
+    .main-section h6 {
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+    .main-section h6 a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .main-section h6 a:hover {
+      color: #ffdd57;
+    }
+    
+    /* Increase title and author font sizes on larger screens */
+    @media (min-width: 992px) {
+      .main-section h2 {
+        font-size: 4rem;
+      }
+      .main-section h6 {
+        font-size: 1.5rem;
+      }
+    }
+    
+    /* Section styling */
+    .section-divider {
+      margin: 60px 0;
+      padding-top: 30px;
+      border-top: 1px solid #ddd;
+    }
+    h4 {
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    p {
+      font-size: 1.1rem;
+    }
+    
+    /* Video container */
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 ratio */
+      height: 0;
+      overflow: hidden;
+      margin: 0 auto 20px;
+    }
+    .video-container iframe,
+    .video-container video,
+    .video-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    
+    /* Button styling */
+    .btn-blue {
+      background-color: #0066cc;
+      border-color: #005bb5;
+      transition: background-color 0.3s, border-color 0.3s;
+      color: #fff;
+    }
+    .btn-blue:hover {
+      background-color: #0080ff;
+      border-color: #0073e6;
+    }
+    
+    /* Modal styling */
+    .modal pre {
+      background-color: #f0f0f0;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    
+    /* Footer */
+    footer {
+      padding: 30px 0;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+    }
+    footer a {
+      color: #ffdd57;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Two-column interleaved rows */
+    @media (min-width: 992px) {
+      .row-interleaved {
+        display: flex;
+        align-items: center;
+      }
+      .row-interleaved .col-md-6 {
+        padding: 20px;
+      }
+    }
+    
+    /* Back-to-top button */
+    #back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: none;
+      z-index: 1000;
+    }
+  </style>
 
-      gtag('config', 'G-P8QCJPHM9S');
-    </script>
-
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8QCJPHM9S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-P8QCJPHM9S');
+  </script>
 </head>
 
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-md fixed-top navbar-dark" style="background-color: #A31F34;">
-        <a class="navbar-brand" href="#">Athletic Loco-Manipulation</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle">
-            <span class="navbar-toggler-icon"></span>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-md fixed-top navbar-dark" style="background-color: #A31F34;">
+      <a class="navbar-brand" href="#">Athletic Loco-Manipulation</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+              aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarToggle">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#Abstract">Abstract</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Method">Method</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Paper">Paper</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Overview">Overview</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Tasks">Tasks</a>
+          </li>
+        </ul>
+      </div>
+  </nav>
+
+  <!-- Main Header Section -->
+  <section class="main-section">
+    <div class="centered-container">
+      <h2>Bridging the Sim-to-Real Gap for Athletic Loco-Manipulation</h2>
+      <h6>
+        <a href="mailto:nolanfey@mit.edu" target="_blank">Nolan Fey</a> &nbsp;&nbsp;
+        <a href="https://gmargo11.github.io/" target="_blank">Gabriel B. Margolis</a> &nbsp;&nbsp;
+        <a href="https://mfpeticco.github.io/" target="_blank">Martin Peticco</a> &nbsp;&nbsp;
+        <a href="https://people.csail.mit.edu/pulkitag/" target="_blank">Pulkit Agrawal</a>
+      </h6>
+      <div class="my-4">
+        <object class="d-inline-block mx-2">
+          <a href="https://www.csail.mit.edu/" target="_blank">
+            <img src="rsc/CSAIL_Primary_Regular_RGB.png" alt="MIT CSAIL" class="img-fluid" width="100" loading="lazy">
+          </a>
+        </object>
+        <object class="d-inline-block mx-2">
+          <a href="https://improbable.ai/" target="_blank">
+            <img src="rsc/IAI_Logo.png" alt="Improbable AI Lab" class="img-fluid" width="100" loading="lazy">
+          </a>
+        </object>
+      </div>
+      <div class="mb-4">
+        <button class="btn btn-blue mr-2" onclick="window.location.href='https://arxiv.org/abs/bridging-sim-to-real'">
+          Paper
         </button>
-        <div class="collapse navbar-collapse" id="navbarToggle">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#Abstract">Abstract</a></li>
-                <li class="nav-item"><a class="nav-link" href="#Paper">Paper</a></li>
-            </ul>
-        </div>
-    </nav>
-    <br>
-
-    <!-- Main Header Section -->
-    <div class="container" style="padding-top: 80px; font-size: 20px">
-        <div align="center">
-            <h2 class="text-center" align="center">
-                Bridging the Sim-to-Real Gap for Athletic Loco-Manipulation
-            </h2>
-            <h6>
-                <a href="mailto:nolanfey@mit.edu" target="_blank">Nolan Fey</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="https://gmargo11.github.io/" target="_blank">Gabriel B. Margolis</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="https://mfpeticco.github.io/" target="_blank">Martin Peticco</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="https://people.csail.mit.edu/pulkitag/" target="_blank">Pulkit Agrawal</a>
-            </h6>
-            <div class="logo-container">
-                <div>
-                    <object hspace="50">
-                        <a href="https://www.csail.mit.edu/" target="_blank">
-                            <img src="rsc/CSAIL_Primary_Regular_RGB.png" alt="MIT CSAIL" width="100">
-                        </a>
-                    </object>
-                    <object hspace="50">
-                        <a href="https://improbable.ai/" target="_blank">
-                            <img src="rsc/IAI_Logo.jpg" alt="Improbable AI Lab" width="100">
-                        </a>
-                    </object>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-    <br>
+  </section>
 
-    <!-- Buttons for Paper and Code -->
-    <center>
-        <button class="btn btn-blue" 
-                onmouseover="this.style.backgroundColor='#0080ff'" 
-                onmouseout="this.style.backgroundColor='#0066cc'" 
-                style="display: inline-block; padding: 8px 16px 8px 42px; font-size: 16px; color: white; background-color: #0066cc; background-image: url(rsc/icons8-paperwork-32.png); background-repeat: no-repeat; background-position: left center; border: none; border-radius: 4px;" 
-                onclick="window.location.href='https://arxiv.org/abs/bridging-sim-to-real'">
-            Paper
-        </button>
-        <!-- <button class="btn" 
-                onmouseover="this.style.backgroundColor='#444'" 
-                onmouseout="this.style.backgroundColor='#333'" 
-                style="display: inline-block; padding: 8px 16px 8px 36px; font-size: 16px; color: white; background-color: #333; background-image: url(https://github.com/favicon.ico); background-repeat: no-repeat; background-position: left center; border: none; border-radius: 4px;" 
-                onclick="window.location.href='https://github.com/Improbable-AI/bridging-sim-to-real'">
-            GitHub
-        </button> -->
-    </center>
-    <br>
-
-    <!-- Highlight Video (Replace src with your project video if available) -->
-    <div class="container" style="padding-top: 10px; font-size: 20px">
-        <div align="center">
-            <div class="center">
-                <video width="100%" style="max-width: 640px;" controls>
-                    <source src="rsc/rss_athletic_tasks_v7_highres.mp4" type="video/mp4">
-                </video>
-            </div>
-        </div>
+  <!-- Highlight Video Section -->
+  <section id="Highlights">
+    <div class="centered-container text-center">
+      <div class="video-container my-4">
+        <video autoplay muted loop playsinline>
+          <source src="rsc/athletic_tasks.m4v" type="video/mp4">
+          Your browser does not support HTML5 video.
+        </video>
+      </div>
     </div>
-    <br>
+  </section>
 
-    <!-- Abstract Section -->
-    <div class="container">
-        <h4 id="Abstract" style="padding-top: 70px; margin-top: -80px;">Abstract</h4>
-        <hr>
-        <div style="text-align: justify">
-            Training controllers via reinforcement learning (RL) in simulation has emerged as a powerful approach for synthesizing robust and agile robotic behaviors evaluated in reality. In our work, we present a two-stage training pipeline for whole-body athletic loco-manipulation. First, a whole-body controller (WBC) is pre-trained to track reference trajectories; then it is fine-tuned with task-specific rewards to learn dynamic behaviors. In addition, we introduce an unsupervised actuator net (UAN) that minimizes the sim-to-real gap by learning corrective torques from real hardware data without relying on direct torque sensing. We demonstrate athletic tasks – including ball throwing, dumbbell snatch, and sled pulling – on a quadruped robot with an arm. Our results show that combining WBC pre-training with UAN-based sim-to-real calibration enables effective transfer of agile whole-body control policies from simulation to reality.
-        </div>
+  <!-- Abstract Section -->
+  <section id="Abstract" class="section-divider">
+    <div class="centered-container">
+      <h4>Abstract</h4>
+      <hr>
+      <p style="text-align: justify;">
+        Training controllers via reinforcement learning (RL) in simulation has emerged as a powerful approach for synthesizing robust and agile robotic behaviors evaluated in reality. We push the envelope of the simulation training paradigm by exposing problems encountered when learning agile behaviors requiring dynamic coordination between many joints, such as in the whole-body control of an arm-mounted quadruped robot. We found that training athletic whole-body control behaviors from scratch often fails, and the sim-to-real gap is greatly pronounced, especially on commodity hardware using complex-to-model harmonic drive actuators with limited sensing. We propose general solutions to overcome these issues that bypass tedious reward design schemes: 
+(i) leveraging a pre-trained whole-body controller as a robust foundation that can be fine-tuned with RL for the target task; and
+(ii) a framework for modeling complex actuation mechanisms without requiring access to torque sensors. 
+Along with several other design decisions that we elaborate, we achieve highly-dynamic whole-body control behaviors such as ball throwing, lifting heavy weights, and sled pulling.
+      </p>
     </div>
-    <br><br>
+  </section>
 
-    <!-- Paper Section -->
-    <div class="container">
-        <h4 id="Paper" style="padding-top: 70px; margin-top: -80px;">Paper</h4>
-        <hr>
-        <div class="row">
-            <div class="col-md-12">
-                <b>Bridging the Sim-to-Real Gap for Athletic Loco-Manipulation</b><br>
-                <a href="mailto:nolanfey@mit.edu" target="_blank">Nolan Fey</a>,
-                <a href="https://gmargo11.github.io/" target="_blank">Gabriel B. Margolis</a>,
-                <a href="https://mfpeticco.github.io/" target="_blank">Martin Peticco</a>,
-                <a href="https://people.csail.mit.edu/pulkitag/" target="_blank">Pulkit Agrawal</a><br>
-                <em>arXiv Preprint, 2025</em><br>
-                <a href="" target="_blank">paper</a> /
-                <a href="https://real2sim2real.csail.mit.edu" target="_blank">project page</a> /
-                <a href="" data-toggle="modal" data-target="#bibtex-modal">
-                    bibtex
-                </a>
-            </div>
+  <!-- Unsupervised Actuator Net Section -->
+  <section id="UAN" class="section-divider">
+    <div class="centered-container">
+      <h4 class="text-center">Unsupervised Actuator Net (UAN)</h4>
+      <hr>
+      <p style="text-align: justify;">
+        We leverage real‑world data to train UAN, which corrects actuator errors in simulation. The following sections illustrate key comparisons and failure cases.
+      </p>
+      <!-- Actuator Friction Video -->
+      <div class="row row-interleaved">
+        <div class="col-md-6 mb-3">
+          <div class="video-container">
+            <video autoplay muted loop playsinline>
+              <source src="rsc/actuator_friction.m4v" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+          <p class="mt-2 text-center">Actuator Friction: Harmonic Drive vs. QDD Motor</p>
+        </div>
+        <div class="col-md-6 mb-3 d-flex align-items-center">
+          <p style="text-align: justify;">
+            UAN learns to correct for non‑linear actuator behavior, compensating for friction and other unmodeled dynamics.
+          </p>
+        </div>
+      </div>
+      <!-- UAN Data Collection Video -->
+      <div class="row row-interleaved">
+        <div class="col-md-6 mb-3 order-md-2">
+          <div class="video-container">
+            <video autoplay muted loop playsinline>
+              <source src="rsc/uan_data_collection.m4v" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+          <p class="mt-2 text-center">Data Collection for UAN Training</p>
+        </div>
+        <div class="col-md-6 mb-3 order-md-1 d-flex align-items-center">
+          <p style="text-align: justify;">
+            Real‑world data from diverse motions trains UAN to output corrective torques.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            <!-- Modal for bibtex -->
-            <div class="modal fade" id="bibtex-modal" tabindex="-1" role="dialog" aria-labelledby="bibtexModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="bibtexModalLabel">BibTeX</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
+  <!-- Overview Section with Charts & New Comparison Video -->
+  <section id="Experiments" class="section-divider">
+    <div class="centered-container">
+      <h4 class="text-center">Experiments</h4>
+      <hr>
+      <!-- Chart Row 1 -->
+      <div class="row row-interleaved mb-4">
+        <div class="col-md-6">
+          <img src="rsc/throw_sim2real.png" alt="Sim-to-Real Chart" class="img-fluid d-block mx-auto" style="max-width:90%;" loading="lazy">
+        </div>
+        <div class="col-md-6 d-flex align-items-center">
+          <p style="text-align: justify;">
+            UAN calibration reduces the gap between simulated and real throwing performance.
+          </p>
+        </div>
+      </div>
+      <!-- Chart Row 2 -->
+      <div class="row row-interleaved mb-4">
+        <div class="col-md-6 order-md-2">
+          <img src="rsc/throw_pretrainfinetune.png" alt="Training Pipeline Performance" class="img-fluid d-block mx-auto" style="max-width:90%;" loading="lazy">
+        </div>
+        <div class="col-md-6 order-md-1 d-flex align-items-center">
+          <p style="text-align: justify;">
+            Our pipeline outperforms training from scratch by combining simulation with UAN-based corrections.
+          </p>
+        </div>
+      </div>
+      <!-- New Video: Sim-to-Real Comparisons -->
+      <div class="row row-interleaved mb-4">
+        <div class="col-md-6">
+          <div class="video-container">
+            <video autoplay muted loop playsinline>
+              <source src="rsc/sim2real_comparisons.m4v" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+        </div>
+        <div class="col-md-6 d-flex align-items-center">
+          <p style="text-align: justify;">
+            This video shows simulated and real robot behaviors side by side, highlighting our improved sim‑to‑real transfer.
+          </p>
+        </div>
+      </div>
+      <!-- Architecture Diagram -->
+      <div class="row mb-4">
+        <div class="col-12 text-center">
+          <img src="rsc/TrainDeployDiagramUpdated.png" alt="WBC Architecture" class="img-fluid d-block mx-auto" style="max-width:60%;" loading="lazy">
+          <p class="mt-2">Architecture: UAN training, WBC pre‑training, fine‑tuning, then deployment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Task Demonstrations Section -->
+  <section id="Tasks" class="section-divider">
+    <div class="centered-container">
+      <h4 class="text-center">Task Demonstrations</h4>
+      <hr>
+      <!-- Ball Throwing -->
+      <div class="row row-interleaved mb-4">
+        <div class="col-md-6">
+          <div class="video-container">
+            <video autoplay muted loop playsinline>
+              <source src="rsc/throw_annotated.m4v" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+        </div>
+        <div class="col-md-6 d-flex align-items-center">
+          <p style="text-align: justify;">
+            In ball throwing, full‑body coordination yields high release speeds.
+          </p>
+        </div>
+      </div>
+      <!-- Sled Pulling -->
+      <div class="row row-interleaved mb-4">
+        <div class="col-md-6 order-md-2">
+          <div class="video-container">
+            <video autoplay muted loop playsinline>
+              <source src="rsc/drag_annotated.m4v" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+        </div>
+        <div class="col-md-6 order-md-1 d-flex align-items-center">
+          <p style="text-align: justify;">
+            The sled pulling task tests sustained force generation and stability.
+          </p>
+        </div>
+      </div>
+      <!-- Dumbbell Snatch -->
+      <div class="row row-interleaved mb-4">
+        <div class="col-md-6">
+          <div class="video-container">
+            <video autoplay muted loop playsinline>
+              <source src="rsc/lift_annotated.m4v" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+        </div>
+        <div class="col-md-6 d-flex align-items-center">
+          <p style="text-align: justify;">
+            In dumbbell snatch, precise whole‑body control enables the robot to lift and stabilize heavy weights.
+          </p>
+        </div>
+      </div>
+      <!-- New Failure Case Video: Throw Break -->
+      <div class="row row-interleaved mb-4">
+        <div class="col-md-6 order-md-2">
+          <div class="video-container">
+            <video autoplay muted loop playsinline>
+              <source src="rsc/throw_break.m4v" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+        </div>
+        <div class="col-md-6 order-md-1 d-flex align-items-center">
+          <p style="text-align: justify;">
+            This video shows a failure case where the robot’s arm broke during a throw due to unmodeled link strength.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Paper Section -->
+  <section id="Paper" class="section-divider">
+    <div class="centered-container">
+      <h4>Paper</h4>
+      <hr>
+      <p>
+        <strong>Bridging the Sim-to-Real Gap for Athletic Loco-Manipulation</strong><br>
+        <a href="mailto:nolanfey@mit.edu" target="_blank">Nolan Fey</a>,
+        <a href="https://gmargo11.github.io/" target="_blank">Gabriel B. Margolis</a>,
+        <a href="https://mfpeticco.github.io/" target="_blank">Martin Peticco</a>,
+        <a href="https://people.csail.mit.edu/pulkitag/" target="_blank">Pulkit Agrawal</a><br>
+        <em>arXiv Preprint, 2025</em><br>
+        <a href="https://arxiv.org/abs/bridging-sim-to-real" target="_blank">paper</a> &nbsp;/&nbsp;
+        <a href="https://real2sim2real.csail.mit.edu" target="_blank">project page</a> &nbsp;/&nbsp;
+        <a href="" data-toggle="modal" data-target="#bibtex-modal">bibtex</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- BibTeX Modal -->
+  <div class="modal fade" id="bibtex-modal" tabindex="-1" role="dialog" aria-labelledby="bibtexModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="bibtexModalLabel">BibTeX</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
 <pre>
 @inproceedings{fey2025bridging,
   title={Bridging the Sim-to-Real Gap for Athletic Loco-Manipulation},
@@ -171,100 +471,49 @@
   year={2025}
 }
 </pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
+      </div>
     </div>
-    <br><br>
+  </div>
 
-    <!-- Real World Highlights Section -->
-    <div class="container">
-        <h4 id="highlights" style="padding-top: 30px; margin-top: -40px;">Real World Highlights</h4>
-        <hr>
-        <div align="center">
-            <br>
-            <div class="center">
-                <!-- Replace "rsc/highlights_new.m4v" with your actual video file -->
-                <video width="100%" style="max-width: 640px;" controls>
-                    <source src="rsc/highlights_new.m4v" type="video/mp4">
-                </video>
-            </div>
-        </div>
+  <!-- Footer -->
+  <footer>
+    <div class="centered-container">
+      <p>Website made using <a href="https://taochenshh.github.io/projects/visual-dexterity" target="_blank">this template</a>.</p>
     </div>
-    <br><br>
+  </footer>
 
-    <!-- Overview Section -->
-    <div class="container">
-        <h4 id="overview" style="padding-top: 30px; margin-top: -40px;">System Overview</h4>
-        <hr>
-        <div align="center">
-            <i><h5>Pre-training, Fine-tuning, and UAN-based Sim-to-Real Calibration</h5></i>
-            <br>
-            <div class="center">
-                <!-- Replace with your system architecture / pipeline image -->
-                <img src="rsc/sim2real_pipeline.png" alt="Sim-to-Real Pipeline" width="80%">
-            </div>
-        </div>
-        <br>
-        <div align="center">
-            <i><h5>Integrated Whole-Body Control Architecture</h5></i>
-            <br>
-            <div class="center">
-                <!-- Replace with your system diagram image -->
-                <img src="rsc/wbc_architecture.png" alt="WBC Architecture" width="60%">
-            </div>
-        </div>
-    </div>
-    <br><br>
+  <!-- Back-to-top Button -->
+  <button id="back-to-top" class="btn btn-blue" title="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
 
-    <!-- Task Specification Section -->
-    <div class="container">
-        <h4 id="sim-training" style="padding-top: 30px; margin-top: -40px;">Task Demonstrations</h4>
-        <hr>
-        <div align="center">
-            <br>
-            <div class="center">
-                <!-- Replace with a video showing simulation of athletic tasks -->
-                <video width="100%" style="max-width: 640px;" controls>
-                    <source src="rsc/simulation_new.m4v" type="video/mp4">
-                </video>
-            </div>
-        </div>
-    </div>
-    <br><br>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+          integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+          crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+          integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+          crossorigin="anonymous"></script>
 
-    <!-- In-the-Wild Evaluation Section -->
-    <div class="container">
-        <h4 id="real-eval" style="padding-top: 30px; margin-top: -40px;">In-the-Wild Evaluation</h4>
-        <hr>
-        <div align="center">
-            <br>
-            <div class="center">
-                <!-- Replace with a video showing real-robot experiments -->
-                <video width="100%" style="max-width: 640px;" controls>
-                    <source src="rsc/full_system_trials_new.m4v" type="video/mp4">
-                </video>
-            </div>
-        </div>
-    </div>
-    <br><br>
+  <script>
+    // Back-to-top button logic
+    var backToTopBtn = document.getElementById('back-to-top');
+    window.onscroll = function () {
+      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        backToTopBtn.style.display = "block";
+      } else {
+        backToTopBtn.style.display = "none";
+      }
+    };
+    backToTopBtn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
-    <center>
-        <p>Website made using <a href="https://taochenshh.github.io/projects/visual-dexterity" target="_blank">this template</a>.</p>
-    </center>
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" 
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" 
-            integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" 
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" 
-            integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" 
-            crossorigin="anonymous"></script>
+  </script>
 </body>
 
 </html>
