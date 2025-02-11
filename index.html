@@ -256,14 +256,26 @@
     <div class="centered-container">
       <h4>Abstract</h4>
       <hr>
-      <p style="text-align: justify;">
+      <!-- <p style="text-align: justify;">
         We present a two‑stage pipeline for whole‑body athletic loco‑manipulation. Instead of solely relying on tracking rewards, which regularize behavior by following a reference trajectory, we train using task rewards – such as “throw the ball as far as you can” or “lift the weight as quickly as possible.” Although task rewards promote true athletic performance, they can be prone to reward hacking. Our solution is to deploy an Unsupervised Actuator Net (UAN) that bridges the sim‑to‑real gap and ensures that the learned behaviors transfer robustly to hardware.
+      </p> -->
+      <p style="text-align: justify;">
+        To achieve athletic <em>loco-manipulation</em> tasks, we need to train with task rewards rather than simply tracking rewards. Task rewards – for example, “throw the ball as far as you can” or “lift the weight as quickly as possible” – encourage the robot to develop dynamic, goal-oriented behaviors that capture the essence of athletic performance.
+      </p>
+      <p style="text-align: justify;">
+        However, training solely with task rewards poses a challenge: these rewards are easily hacked. Whereas tracking rewards regularize the behavior by guiding the robot toward a good reference, task rewards can be exploited in unintended ways if the underlying simulation does not accurately reflect real-world dynamics.
+      </p>
+      <p style="text-align: justify;">
+        To overcome this issue, we propose the Unsupervised Actuator Net (UAN), which leverages real‑world data to calibrate the simulation. UAN mitigates the sim‑to‑real gap and reduces the potential for reward hacking, enabling the robot to learn robust athletic behaviors.
+      </p>
+      <p style="text-align: justify;">
+        With UAN, our robot athlete learns to lift, throw, and drag with remarkable transfer from simulation to reality.
       </p>
     </div>
   </section>
 
   <!-- Method Section -->
-  <section id="Method" class="section-divider">
+  <!-- <section id="Method" class="section-divider">
     <div class="centered-container">
       <h4>Method</h4>
       <hr>
@@ -280,7 +292,7 @@
         With UAN, our robot athlete learns to lift, throw, and drag with remarkable transfer from simulation to reality.
       </p>
     </div>
-  </section>
+  </section> -->
 
   <!-- Unsupervised Actuator Net Section -->
   <section id="UAN" class="section-divider">
