@@ -32,7 +32,7 @@
       background-color: #f8f9fa;
       color: #333;
       line-height: 1.6;
-      margin-top: 70px; /* Ensure content isn’t hidden behind fixed navbar */
+      margin-top: 70px; /* So content isn’t hidden behind the fixed navbar */
     }
     /* Centered container */
     .centered-container {
@@ -41,7 +41,7 @@
       padding: 0 15px;
     }
     
-    /* Navbar (Improved accessibility and removed extra div) */
+    /* Navbar styling and accessibility */
     .navbar {
       padding: 0.5rem 1rem;
     }
@@ -70,7 +70,6 @@
     .main-section h6 a:hover {
       color: #ffdd57;
     }
-    
     /* Increase title and author font sizes on larger screens */
     @media (min-width: 992px) {
       .main-section h2 {
@@ -181,30 +180,33 @@
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-md fixed-top navbar-dark" style="background-color: #A31F34;">
-      <a class="navbar-brand" href="#">Athletic Loco-Manipulation</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
-              aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarToggle">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#Abstract">Abstract</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#Method">Method</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#Paper">Paper</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#Overview">Overview</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#Tasks">Tasks</a>
-          </li>
-        </ul>
-      </div>
+    <a class="navbar-brand" href="#">Athletic Loco-Manipulation</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+            aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarToggle">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#Abstract">Abstract</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#Method">Method</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#UAN">UAN</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#Experiments">Experiments</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#Tasks">Tasks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#Paper">Paper</a>
+        </li>
+      </ul>
+    </div>
   </nav>
 
   <!-- Main Header Section -->
@@ -255,10 +257,27 @@
       <h4>Abstract</h4>
       <hr>
       <p style="text-align: justify;">
-        Training controllers via reinforcement learning (RL) in simulation has emerged as a powerful approach for synthesizing robust and agile robotic behaviors evaluated in reality. We push the envelope of the simulation training paradigm by exposing problems encountered when learning agile behaviors requiring dynamic coordination between many joints, such as in the whole-body control of an arm-mounted quadruped robot. We found that training athletic whole-body control behaviors from scratch often fails, and the sim-to-real gap is greatly pronounced, especially on commodity hardware using complex-to-model harmonic drive actuators with limited sensing. We propose general solutions to overcome these issues that bypass tedious reward design schemes: 
-(i) leveraging a pre-trained whole-body controller as a robust foundation that can be fine-tuned with RL for the target task; and
-(ii) a framework for modeling complex actuation mechanisms without requiring access to torque sensors. 
-Along with several other design decisions that we elaborate, we achieve highly-dynamic whole-body control behaviors such as ball throwing, lifting heavy weights, and sled pulling.
+        We present a two‑stage pipeline for whole‑body athletic loco‑manipulation. Instead of solely relying on tracking rewards, which regularize behavior by following a reference trajectory, we train using task rewards – such as “throw the ball as far as you can” or “lift the weight as quickly as possible.” Although task rewards promote true athletic performance, they can be prone to reward hacking. Our solution is to deploy an Unsupervised Actuator Net (UAN) that bridges the sim‑to‑real gap and ensures that the learned behaviors transfer robustly to hardware.
+      </p>
+    </div>
+  </section>
+
+  <!-- Method Section -->
+  <section id="Method" class="section-divider">
+    <div class="centered-container">
+      <h4>Method</h4>
+      <hr>
+      <p style="text-align: justify;">
+        To achieve athletic <em>loco-manipulation</em> tasks, we need to train with task rewards rather than simply tracking rewards. Task rewards – for example, “throw the ball as far as you can” or “lift the weight as quickly as possible” – encourage the robot to develop dynamic, goal-oriented behaviors that capture the essence of athletic performance.
+      </p>
+      <p style="text-align: justify;">
+        However, training solely with task rewards poses a challenge: these rewards are easily hacked. Whereas tracking rewards regularize the behavior by guiding the robot toward a good reference, task rewards can be exploited in unintended ways if the underlying simulation does not accurately reflect real-world dynamics.
+      </p>
+      <p style="text-align: justify;">
+        To overcome this issue, we propose the Unsupervised Actuator Net (UAN), which leverages real‑world data to calibrate the simulation. UAN mitigates the sim‑to‑real gap and reduces the potential for reward hacking, enabling the robot to learn robust athletic behaviors.
+      </p>
+      <p style="text-align: justify;">
+        With UAN, our robot athlete learns to lift, throw, and drag with remarkable transfer from simulation to reality.
       </p>
     </div>
   </section>
@@ -269,7 +288,7 @@ Along with several other design decisions that we elaborate, we achieve highly-d
       <h4 class="text-center">Unsupervised Actuator Net (UAN)</h4>
       <hr>
       <p style="text-align: justify;">
-        We leverage real‑world data to train UAN, which corrects actuator errors in simulation. The following sections illustrate key comparisons and failure cases.
+        We leverage real‑world data to train UAN, which not only corrects actuator errors in simulation but also mitigates reward hacking by ensuring that task rewards produce realistic and robust behaviors. The following sections illustrate key comparisons and failure cases.
       </p>
       <!-- Actuator Friction Video -->
       <div class="row row-interleaved">
@@ -301,14 +320,14 @@ Along with several other design decisions that we elaborate, we achieve highly-d
         </div>
         <div class="col-md-6 mb-3 order-md-1 d-flex align-items-center">
           <p style="text-align: justify;">
-            Real‑world data from diverse motions trains UAN to output corrective torques.
+            Real‑world data from diverse motions trains UAN to output corrective torques, ensuring that task rewards drive authentic athletic behaviors.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Overview Section with Charts & New Comparison Video -->
+  <!-- Experiments Section -->
   <section id="Experiments" class="section-divider">
     <div class="centered-container">
       <h4 class="text-center">Experiments</h4>
@@ -331,7 +350,7 @@ Along with several other design decisions that we elaborate, we achieve highly-d
         </div>
         <div class="col-md-6 order-md-1 d-flex align-items-center">
           <p style="text-align: justify;">
-            Our pipeline outperforms training from scratch by combining pre-trained whole-body control with task-specific end-to-end finetuning.
+            End-to-end athletic task policies outperform policies trained only with tracking rewards. However, we find that a pretraining stage based on tracking rewards benefits the final performance by assisting exploration.
           </p>
         </div>
       </div>
@@ -347,7 +366,7 @@ Along with several other design decisions that we elaborate, we achieve highly-d
         </div>
         <div class="col-md-6 d-flex align-items-center">
           <p style="text-align: justify;">
-            This video shows simulated and real robot behaviors side by side, highlighting our improved sim‑to‑real transfer.
+            This video shows simulated and real robot behaviors side by side, highlighting our good sim‑to‑real transfer.
           </p>
         </div>
       </div>
@@ -458,6 +477,7 @@ Along with several other design decisions that we elaborate, we achieve highly-d
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="bibtexModalLabel">BibTeX</h5>
+          <button type="button" class="btn btn-outline-secondary btn-sm" id="copyBibtex">Copy</button>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -513,6 +533,15 @@ Along with several other design decisions that we elaborate, we achieve highly-d
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
+    // Copy BibTeX text to clipboard
+    document.getElementById('copyBibtex').addEventListener('click', function () {
+      var bibtexText = document.querySelector('#bibtex-modal pre').innerText;
+      navigator.clipboard.writeText(bibtexText).then(function () {
+        alert('BibTeX copied to clipboard!');
+      }, function (err) {
+        alert('Error in copying text: ' + err);
+      });
+    });
   </script>
 </body>
 
