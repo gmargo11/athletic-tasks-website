@@ -260,16 +260,26 @@
         We present a two‑stage pipeline for whole‑body athletic loco‑manipulation. Instead of solely relying on tracking rewards, which regularize behavior by following a reference trajectory, we train using task rewards – such as “throw the ball as far as you can” or “lift the weight as quickly as possible.” Although task rewards promote true athletic performance, they can be prone to reward hacking. Our solution is to deploy an Unsupervised Actuator Net (UAN) that bridges the sim‑to‑real gap and ensures that the learned behaviors transfer robustly to hardware.
       </p> -->
       <p style="text-align: justify;">
-        To achieve athletic <em>loco-manipulation</em> tasks that push hardware limits, we need to train with task rewards rather than simply tracking rewards. Task rewards – for example, “throw the ball as far as you can” or “lift the weight as quickly as possible” – encourage the robot to develop dynamic, goal-oriented behaviors that capture the essence of athletic performance.
+        <!-- To achieve athletic <em>loco-manipulation</em> tasks that push hardware limits, we need to train with task rewards rather than simply tracking rewards. Task rewards – for example, “throw the ball as far as you can” or “lift the weight as quickly as possible” – encourage the robot to develop dynamic, goal-oriented behaviors that capture the essence of athletic performance. -->
+        Achieving athletic <em>loco‑manipulation</em> on robots requires moving beyond traditional tracking rewards — which simply guide the robot along a reference trajectory — to task rewards that drive truly dynamic, goal-oriented behaviors. Commands such as “throw the ball as far as you can” or “lift the weight as quickly as possible” compel the robot to exhibit the agility and power inherent in athletic performance. 
       </p>
       <p style="text-align: justify;">
-        However, training solely with task rewards poses a challenge: these rewards are easily hacked. Whereas tracking rewards regularize the behavior by guiding the robot toward a good reference, task rewards can be exploited in unintended ways if the underlying simulation does not accurately reflect real-world dynamics.
+        <!-- However, training solely with task rewards poses a challenge: these rewards are easily hacked. Whereas tracking rewards regularize the behavior by guiding the robot toward a good reference, task rewards can be exploited in unintended ways if the underlying simulation does not accurately reflect real-world dynamics. -->
+        However, training solely with task rewards introduces two major challenges: 1) these rewards are prone to exploitation (reward hacking), and 2) the exploration process can lack sufficient direction.
       </p>
       <p style="text-align: justify;">
-        To overcome this issue, we propose the Unsupervised Actuator Net (UAN), which leverages real‑world data to calibrate the simulation. UAN mitigates the sim‑to‑real gap and reduces the potential for reward hacking, enabling the robot to learn robust athletic behaviors.
+        <!-- To overcome this issue, we propose the Unsupervised Actuator Net (UAN), which leverages real‑world data to calibrate the simulation. UAN mitigates the sim‑to‑real gap and reduces the potential for reward hacking, enabling the robot to learn robust athletic behaviors. -->
+        To address these issues, we propose a two‑stage training pipeline. 
       </p>
       <p style="text-align: justify;">
-        With UAN, our robot athlete learns to lift, throw, and drag with remarkable transfer from simulation to reality.
+        <!-- With UAN, our robot athlete learns to lift, throw, and drag with remarkable transfer from simulation to reality. -->
+        First, we introduce the <em>Unsupervised Actuator Net</em> (UAN), which leverages real‑world data to bridge the sim-to-real gap for complex actuation mechanisms without requiring access to torque sensing. UAN mitigates reward hacking by ensuring that the learned behaviors remain robust and transferable. 
+      </p>
+      <p style="text-align: justify;">
+        Second, we use a pre‑training and fine‑tuning strategy that leverages reference trajectories as initial hints to guide exploration.
+      </p>
+      <p style="text-align: justify;">
+        With these innovations, our robot athlete learns to lift, throw, and drag with remarkable fidelity from simulation to reality.
       </p>
     </div>
   </section>
@@ -463,6 +473,133 @@
       </div>
     </div>
   </section>
+
+  <!-- Arm-only Baselines Section -->
+<section id="Tasks" class="section-divider">
+  <div class="centered-container">
+    <h4 class="text-center">Baselines</h4>
+    <hr>
+    <!-- Default Simulator -->
+    <div class="row row-interleaved mb-4">
+      <div class="col-md-6">
+        <div class="video-container">
+          <video autoplay muted loop playsinline>
+            <source src="rsc/baseline-open-loop-9366.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+      </div>
+      <div class="col-md-6 d-flex align-items-center">
+        <p style="text-align: justify;">
+          <em>Default</em>: The unmodified baseline simulator.
+        </p>
+        <p style="text-align: justify;">
+          Although the open-loop throw trajectory appears acceptable in simulation, small deviations—when accumulated during closed-loop execution—result in a failed sim-to-real transfer.
+        </p>
+      </div>
+    </div>
+    
+    <!-- CEM -->
+    <div class="row row-interleaved mb-4">
+      <div class="col-md-6 order-md-2">
+        <div class="video-container">
+          <video autoplay muted loop playsinline>
+            <source src="rsc/cem-open-loop-9383.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+      </div>
+      <div class="col-md-6 order-md-1 d-flex align-items-center">
+        <p style="text-align: justify;">
+          <em>CEM</em>: Optimizes physical parameters—such as friction, frictional damping, and armature characteristics—using the cross-entropy method.
+        </p>
+        <p style="text-align: justify;">
+          While the policy achieves a successful ball throw, the resulting motion is noticeably jittery.
+        </p>
+      </div>
+    </div>
+    
+    <!-- DR -->
+    <div class="row row-interleaved mb-4">
+      <div class="col-md-6 order-md-2">
+        <div class="video-container">
+          <video autoplay muted loop playsinline>
+            <source src="rsc/dr-open-loop-9370.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+      </div>
+      <div class="col-md-6 order-md-1 d-flex align-items-center">
+        <p style="text-align: justify;">
+          <em>DR</em>: The simulator augmented with domain randomization (randomizing PD gains, friction, and armature parameters)y.
+        </p>
+        <p style="text-align: justify;">
+          The closed-loop behavior on hardware deviates substantially from the simulation.
+        </p>
+      </div>
+    </div>
+    
+    <!-- ROA -->
+    <div class="row row-interleaved mb-4">
+      <div class="col-md-6">
+        <div class="video-container">
+          <video autoplay muted loop playsinline>
+            <source src="rsc/roa-open-loop-9386.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+      </div>
+      <div class="col-md-6 d-flex align-items-center">
+        <p style="text-align: justify;">
+          <em>ROA</em>: Combines domain randomization with an online system identification module via Regularized Online Adaptation.
+        </p>
+        <p style="text-align: justify;">
+          Although ROA improves performance relative to DR, it remains limited because the domain randomization does not fully capture the complex dynamics of the actuators.
+        </p>
+      </div>
+    </div>
+    
+    <!-- Actuator Net -->
+    <div class="row row-interleaved mb-4">
+      <div class="col-md-6 order-md-2">
+        <div class="video-container">
+          <video autoplay muted loop playsinline>
+            <source src="rsc/supervised-open-loop-9407.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+      </div>
+      <div class="col-md-6 order-md-1 d-flex align-items-center">
+        <p style="text-align: justify;">
+          <em>Actuator Net</em>: Utilizes a supervised learning approach where an actuator network predicts corrective torques based on motor current measurements.
+        </p>
+        <p style="text-align: justify;">
+          The sim-to-real gap persists due to nonlinear effects introduced by the harmonic reducers.
+        </p>
+      </div>
+    </div>
+    
+    <!-- UAN -->
+    <div class="row row-interleaved mb-4">
+      <div class="col-md-6 order-md-2">
+        <div class="video-container">
+          <video autoplay muted loop playsinline>
+            <source src="rsc/ours_p9sjynk0_trimmed-10451.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+      </div>
+      <div class="col-md-6 order-md-1 d-flex align-items-center">
+        <p style="text-align: justify;">
+          <em>UAN</em>: Our proposed unsupervised actuator network learns to compute corrective torques without requiring explicit torque labels. This approach effectively captures both actuator lag and the nonlinearities arising from harmonic reduction.
+        </p>
+        <p style="text-align: justify;">
+          Successful sim-to-real transfer!
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
   <!-- Paper Section -->
   <section id="Paper" class="section-divider">
