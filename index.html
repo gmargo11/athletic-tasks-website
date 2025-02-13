@@ -511,10 +511,7 @@
       </div>
       <div class="col-md-6 order-md-1 d-flex align-items-center">
         <p style="text-align: justify;">
-          <em>CEM</em>: Optimizes physical parameters—such as friction, frictional damping, and armature characteristics—using the cross-entropy method.
-        </p>
-        <p style="text-align: justify;">
-          While the policy achieves a successful ball throw, the resulting motion is noticeably jittery.
+          <em>CEM</em>: Optimizes physical parameters—such as friction, frictional damping, and armature characteristics—using the cross-entropy method. While the policy achieves a successful ball throw, the resulting motion is noticeably jittery.
         </p>
       </div>
     </div>
@@ -531,10 +528,7 @@
       </div>
       <div class="col-md-6 order-md-1 d-flex align-items-center">
         <p style="text-align: justify;">
-          <em>DR</em>: The simulator augmented with domain randomization (randomizing PD gains, friction, and armature parameters)y.
-        </p>
-        <p style="text-align: justify;">
-          The closed-loop behavior on hardware deviates substantially from the simulation.
+          <em>DR</em>: The simulator augmented with domain randomization (randomizing PD gains, friction, and armature parameters). The closed-loop behavior on hardware deviates substantially from the simulation.
         </p>
       </div>
     </div>
@@ -551,10 +545,7 @@
       </div>
       <div class="col-md-6 d-flex align-items-center">
         <p style="text-align: justify;">
-          <em>ROA</em>: Combines domain randomization with an online system identification module via Regularized Online Adaptation.
-        </p>
-        <p style="text-align: justify;">
-          Although ROA improves performance relative to DR, it remains limited because the domain randomization does not fully capture the complex dynamics of the actuators.
+          <em>ROA</em>: Combines domain randomization with an online system identification module via Regularized Online Adaptation. Although ROA improves performance relative to DR, it remains limited because the domain randomization does not fully capture the complex dynamics of the actuators.
         </p>
       </div>
     </div>
@@ -571,10 +562,7 @@
       </div>
       <div class="col-md-6 order-md-1 d-flex align-items-center">
         <p style="text-align: justify;">
-          <em>Actuator Net</em>: Utilizes a supervised learning approach where an actuator network predicts corrective torques based on motor current measurements.
-        </p>
-        <p style="text-align: justify;">
-          The sim-to-real gap persists due to nonlinear effects introduced by the harmonic reducers.
+          <em>Actuator Net</em>: Utilizes a supervised learning approach where an actuator network predicts corrective torques based on motor current measurements. The sim-to-real gap persists due to nonlinear effects introduced by the harmonic reducers.
         </p>
       </div>
     </div>
@@ -591,10 +579,7 @@
       </div>
       <div class="col-md-6 order-md-1 d-flex align-items-center">
         <p style="text-align: justify;">
-          <em>UAN</em>: Our proposed unsupervised actuator network learns to compute corrective torques without requiring explicit torque labels. This approach effectively captures both actuator lag and the nonlinearities arising from harmonic reduction.
-        </p>
-        <p style="text-align: justify;">
-          Successful sim-to-real transfer!
+          <em>UAN</em>: Our proposed unsupervised actuator network learns to compute corrective torques without requiring explicit torque labels. This approach effectively captures both actuator lag and the nonlinearities arising from harmonic reduction. Successful sim-to-real transfer!
         </p>
       </div>
     </div>
