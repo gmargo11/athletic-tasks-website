@@ -203,7 +203,7 @@
           <a class="nav-link" href="#Tasks">Tasks</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#Baselines">Baselines</a>
+          <a class="nav-link" href="#Tasks" id="baselinesNavLink">Baselines</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#Paper">Paper</a>
@@ -719,6 +719,30 @@
       });
     });
   </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const baselinesLink = document.getElementById("baselinesNavLink");
+    const baselinesSection = document.getElementById("tasksCollapse");
+    const bootstrapCollapse = new bootstrap.Collapse(baselinesSection, { toggle: false });
+
+    baselinesLink.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent default anchor behavior
+
+      if (!baselinesSection.classList.contains("show")) {
+        bootstrapCollapse.show();
+        
+        // Wait for animation to complete before scrolling
+        setTimeout(() => {
+          document.getElementById("Tasks").scrollIntoView({ behavior: "smooth" });
+        }, 300); // Adjust delay based on Bootstrap collapse animation duration
+      } else {
+        document.getElementById("Tasks").scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  });
+</script>
+
 </body>
 
 </html>
